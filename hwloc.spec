@@ -54,7 +54,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} %{_libdir}/lib%{name}.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib%{name}.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
