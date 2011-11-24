@@ -11,6 +11,7 @@ BuildRequires:	cairo-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	numactl-devel
 BuildRequires:	pciutils-devel
+BuildRequires:	pkgconfig >= 0.9.0
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-proto-xproto-devel
 Requires:	%{name}-libs = %{version}-%{release}
@@ -73,7 +74,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%{_pkgconfigdir}/%{name}.pc
 %attr(755,root,root) %{_libdir}/lib%{name}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/lib%{name}.so.4
 
@@ -81,6 +81,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/doxygen-doc/html doc/doxygen-doc/%{name}-*.pdf
 %attr(755,root,root) %{_libdir}/lib%{name}.so
+%{_pkgconfigdir}/%{name}.pc
 %{_includedir}/%{name}
 %{_includedir}/%{name}.h
 %{_mandir}/man3/HWLOC_*.3*
