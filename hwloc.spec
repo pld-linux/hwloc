@@ -65,10 +65,8 @@ Summary:	Header files for hwloc library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki hwloc
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	OpenCL-devel
-Requires:	libxml2-devel >= 2.0
+Requires:	libltdl-devel
 Requires:	numactl-devel
-Requires:	xorg-lib-libpciaccess-devel
 
 %description devel
 Header files for hwloc library.
