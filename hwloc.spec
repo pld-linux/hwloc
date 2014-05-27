@@ -1,6 +1,8 @@
 # TODO: CUDA >= 30.20, NVML/nvidia-ml on bcond?
-# kerrighed >= 2.0 ?
-# myriexpress ?
+# NOTES (as of 1.9):
+# - kerrighed library is only checked for; kerrighed support in hwloc uses /proc filesystem
+# - myriexpress (open-mx) library is only checked for, but not used by hwloc code
+#   (just in one test); in binary packages only interface header is included
 Summary:	Portable Hardware Locality
 Summary(pl.UTF-8):	Przenośna lokalizacja sprzętu
 Name:		hwloc
