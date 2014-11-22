@@ -1,17 +1,17 @@
 # TODO: CUDA >= 30.20, NVML/nvidia-ml on bcond?
-# NOTES (as of 1.9):
+# NOTES (as of 1.10):
 # - kerrighed library is only checked for; kerrighed support in hwloc uses /proc filesystem
 # - myriexpress (open-mx) library is only checked for, but not used by hwloc code
 #   (just in one test); in binary packages only interface header is included
 Summary:	Portable Hardware Locality
 Summary(pl.UTF-8):	Przenośna lokalizacja sprzętu
 Name:		hwloc
-Version:	1.9
+Version:	1.10.0
 Release:	1
 License:	BSD
 Group:		Applications/System
-Source0:	http://www.open-mpi.org/software/hwloc/v%{version}/downloads/%{name}-%{version}.tar.bz2
-# Source0-md5:	1954f690211227cb0a665624aab6aaa6
+Source0:	http://www.open-mpi.org/software/hwloc/v1.10/downloads/%{name}-%{version}.tar.bz2
+# Source0-md5:	c0502d93b1b8800cde28f84010bccfe0
 URL:		http://www.open-mpi.org/projects/hwloc/
 BuildRequires:	OpenCL-devel
 BuildRequires:	OpenGL-devel
@@ -94,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libhwloc.la \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}/*.la
 
+# packaged as %doc
+%{__rm} $RPM_BUILD_ROOT%{_docdir}/hwloc/hwloc*.pdf
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -110,6 +113,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/hwloc_pci.so
 %attr(755,root,root) %{_libdir}/%{name}/hwloc_xml_libxml.so
 %{_datadir}/%{name}
+%{_desktopdir}/hwloc-ls.desktop
 %{_mandir}/man1/hwloc-*.1*
 %{_mandir}/man1/lstopo.1*
 %{_mandir}/man1/lstopo-no-graphics.1*
