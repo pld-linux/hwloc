@@ -7,7 +7,7 @@ Summary:	Portable Hardware Locality
 Summary(pl.UTF-8):	Przenośna lokalizacja sprzętu
 Name:		hwloc
 Version:	1.10.0
-Release:	1
+Release:	2
 License:	BSD
 Group:		Applications/System
 Source0:	http://www.open-mpi.org/software/hwloc/v1.10/downloads/%{name}-%{version}.tar.bz2
