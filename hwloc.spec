@@ -1,33 +1,40 @@
 # TODO: CUDA >= 30.20, NVML/nvidia-ml on bcond?
-# NOTES (as of 1.10):
-# - kerrighed library is only checked for; kerrighed support in hwloc uses /proc filesystem
+# NOTES (as of 1.9-1.11):
+# - kerrighed library (>= 2.0) is only checked for; kerrighed support in hwloc uses /proc filesystem
 # - myriexpress (open-mx) library is only checked for, but not used by hwloc code
 #   (just in one test); in binary packages only interface header is included
+# - same with libibverbs
 Summary:	Portable Hardware Locality
 Summary(pl.UTF-8):	Przenośna lokalizacja sprzętu
 Name:		hwloc
-Version:	1.10.0
-Release:	2
+Version:	1.11.12
+Release:	1
 License:	BSD
 Group:		Applications/System
-Source0:	http://www.open-mpi.org/software/hwloc/v1.10/downloads/%{name}-%{version}.tar.bz2
-# Source0-md5:	c0502d93b1b8800cde28f84010bccfe0
-URL:		http://www.open-mpi.org/projects/hwloc/
+#Future TODO (breaks API): https://www.open-mpi.org/software/hwloc/v2.0/
+#Source0Download: https://www.open-mpi.org/software/hwloc/v1.11/
+Source0:	https://download.open-mpi.org/release/hwloc/v1.11/%{name}-%{version}.tar.bz2
+# Source0-md5:	c2a2e4e23eeb719ed31a755684697cf9
+URL:		https://www.open-mpi.org/projects/hwloc/
 BuildRequires:	OpenCL-devel
 BuildRequires:	OpenGL-devel
 BuildRequires:	cairo-devel
 BuildRequires:	libXNVCtrl-devel
-BuildRequires:	libibverbs-devel
-BuildRequires:	libltdl-devel
+BuildRequires:	libltdl-devel >= 2:2.2.6
 BuildRequires:	libstdc++-devel
 BuildRequires:	libxml2-devel >= 2.0
 BuildRequires:	ncurses-devel
 BuildRequires:	numactl-devel
 BuildRequires:	pkgconfig >= 1:0.9.0
+BuildRequires:	udev-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libpciaccess-devel
 BuildRequires:	xorg-proto-xproto-devel
+%if %{with tests}
+BuildRequires:	libibverbs-devel
+BuildRequires:	open-mx-devel
+%endif
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -67,8 +74,9 @@ Summary:	Header files for hwloc library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki hwloc
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	libltdl-devel
+Requires:	libltdl-devel >= 2:2.2.6
 Requires:	numactl-devel
+Requires:	udev-devel
 
 %description devel
 Header files for hwloc library.
@@ -108,12 +116,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/hwloc-*
 %attr(755,root,root) %{_bindir}/lstopo
 %attr(755,root,root) %{_bindir}/lstopo-no-graphics
+%attr(755,root,root) %{_sbindir}/hwloc-dump-hwdata
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/hwloc_opencl.so
 %attr(755,root,root) %{_libdir}/%{name}/hwloc_pci.so
 %attr(755,root,root) %{_libdir}/%{name}/hwloc_xml_libxml.so
 %{_datadir}/%{name}
-%{_desktopdir}/hwloc-ls.desktop
+%{_desktopdir}/lstopo.desktop
 %{_mandir}/man1/hwloc-*.1*
 %{_mandir}/man1/lstopo.1*
 %{_mandir}/man1/lstopo-no-graphics.1*
