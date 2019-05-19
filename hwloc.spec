@@ -1,20 +1,25 @@
-# TODO: CUDA >= 30.20, NVML/nvidia-ml on bcond?
+# TODO: scotch (for netlockscotch), CUDA >= 30.20, NVML/nvidia-ml on bcond?
 # NOTES (as of 1.9-1.11):
 # - kerrighed library (>= 2.0) is only checked for; kerrighed support in hwloc uses /proc filesystem
 # - myriexpress (open-mx) library is only checked for, but not used by hwloc code
 #   (just in one test); in binary packages only interface header is included
 # - same with libibverbs
+#
+# Conditional build:
+%bcond_with	mpi	# MPI support in netloc
+%bcond_with	scotch	# SCOTCH support in netloc
+%bcond_without	netloc	# netloc library
+
 Summary:	Portable Hardware Locality
 Summary(pl.UTF-8):	Przenośna lokalizacja sprzętu
 Name:		hwloc
-Version:	1.11.12
+Version:	2.0.3
 Release:	1
 License:	BSD
 Group:		Applications/System
-#Future TODO (breaks API): https://www.open-mpi.org/software/hwloc/v2.0/
-#Source0Download: https://www.open-mpi.org/software/hwloc/v1.11/
-Source0:	https://download.open-mpi.org/release/hwloc/v1.11/%{name}-%{version}.tar.bz2
-# Source0-md5:	c2a2e4e23eeb719ed31a755684697cf9
+#Source0Download: https://www.open-mpi.org/software/hwloc/v2.0/
+Source0:	https://download.open-mpi.org/release/hwloc/v2.0/%{name}-%{version}.tar.bz2
+# Source0-md5:	f9346b6d9051f7fe07a997d405d71a59
 URL:		https://www.open-mpi.org/projects/hwloc/
 BuildRequires:	OpenCL-devel
 BuildRequires:	OpenGL-devel
@@ -23,9 +28,11 @@ BuildRequires:	libXNVCtrl-devel
 BuildRequires:	libltdl-devel >= 2:2.2.6
 BuildRequires:	libstdc++-devel
 BuildRequires:	libxml2-devel >= 2.0
+%{?with_mpi:BuildRequires:	mpi-devel}
 BuildRequires:	ncurses-devel
 BuildRequires:	numactl-devel
 BuildRequires:	pkgconfig >= 1:0.9.0
+%{?with_scotch:BuildRequires:	scotch-devel}
 BuildRequires:	udev-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
@@ -89,6 +96,9 @@ Pliki nagłówkowe biblioteki hwloc.
 
 %build
 %configure \
+	%{!?with_mpi:ac_cv_header_mpi_h=no} \
+	%{!?with_scotch:ac_cv_lib_scotch_SCOTCH_archSub=no} \
+	%{?with_netloc:--enable-netloc} \
 	--enable-plugins \
 	--disable-silent-rules
 %{__make}
@@ -99,7 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libhwloc.la \
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib*.la \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}/*.la
 
 # packaged as %doc
@@ -116,6 +126,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/hwloc-*
 %attr(755,root,root) %{_bindir}/lstopo
 %attr(755,root,root) %{_bindir}/lstopo-no-graphics
+%if %{with netloc}
+%attr(755,root,root) %{_bindir}/netloc_*
+%endif
 %attr(755,root,root) %{_sbindir}/hwloc-dump-hwdata
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/hwloc_opencl.so
@@ -132,12 +145,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING NEWS README
 %attr(755,root,root) %{_libdir}/libhwloc.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhwloc.so.5
+%attr(755,root,root) %ghost %{_libdir}/libhwloc.so.15
+%if %{with netloc}
+%attr(755,root,root) %{_libdir}/libnetloc.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libnetloc.so.0
+%endif
 
 %files devel
 %defattr(644,root,root,755)
 %doc doc/doxygen-doc/html doc/doxygen-doc/hwloc-a4.pdf
 %attr(755,root,root) %{_libdir}/libhwloc.so
+%if %{with netloc}
+%attr(755,root,root) %{_libdir}/libnetloc.so
+%endif
 %{_pkgconfigdir}/hwloc.pc
 %{_includedir}/hwloc
 %{_includedir}/hwloc.h
