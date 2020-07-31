@@ -1,3 +1,4 @@
+# NOTE: Lunchbox (1.17) is not ready for hwloc 2.x
 # TODO: scotch (for netlockscotch), CUDA >= 30.20, NVML/nvidia-ml on bcond?
 # NOTES (as of 1.9-1.11):
 # - kerrighed library (>= 2.0) is only checked for; kerrighed support in hwloc uses /proc filesystem
