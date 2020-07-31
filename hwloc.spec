@@ -13,13 +13,13 @@
 Summary:	Portable Hardware Locality
 Summary(pl.UTF-8):	Przenośna lokalizacja sprzętu
 Name:		hwloc
-Version:	2.0.3
+Version:	2.0.4
 Release:	1
 License:	BSD
 Group:		Applications/System
 #Source0Download: https://www.open-mpi.org/software/hwloc/v2.0/
 Source0:	https://download.open-mpi.org/release/hwloc/v2.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	f9346b6d9051f7fe07a997d405d71a59
+# Source0-md5:	c4e43c41abbd76765273b7c91269cac7
 URL:		https://www.open-mpi.org/projects/hwloc/
 BuildRequires:	OpenCL-devel
 BuildRequires:	OpenGL-devel
@@ -33,6 +33,7 @@ BuildRequires:	ncurses-devel
 BuildRequires:	numactl-devel
 BuildRequires:	pkgconfig >= 1:0.9.0
 %{?with_scotch:BuildRequires:	scotch-devel}
+BuildRequires:	sed >= 4.0
 BuildRequires:	udev-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
@@ -93,6 +94,8 @@ Pliki nagłówkowe biblioteki hwloc.
 
 %prep
 %setup -q
+
+%{__sed} -i -e '1s,/usr/bin/env perl,%{__perl},' utils/netloc/infiniband/netloc_ib_gather_raw.in
 
 %build
 %configure \
