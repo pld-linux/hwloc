@@ -7,14 +7,14 @@
 Summary:	Portable Hardware Locality
 Summary(pl.UTF-8):	Przenośna lokalizacja sprzętu
 Name:		hwloc
-Version:	1.11.12
+Version:	1.11.13
 Release:	1
 License:	BSD
 Group:		Applications/System
 #Future TODO (breaks API): https://www.open-mpi.org/software/hwloc/v2.0/
 #Source0Download: https://www.open-mpi.org/software/hwloc/v1.11/
 Source0:	https://download.open-mpi.org/release/hwloc/v1.11/%{name}-%{version}.tar.bz2
-# Source0-md5:	c2a2e4e23eeb719ed31a755684697cf9
+# Source0-md5:	3c792e23c209e9e1bafe9bdbc613d401
 URL:		https://www.open-mpi.org/projects/hwloc/
 BuildRequires:	OpenCL-devel
 BuildRequires:	OpenGL-devel
