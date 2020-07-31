@@ -13,13 +13,13 @@
 Summary:	Portable Hardware Locality
 Summary(pl.UTF-8):	Przenośna lokalizacja sprzętu
 Name:		hwloc
-Version:	2.0.4
+Version:	2.2.0
 Release:	1
 License:	BSD
 Group:		Applications/System
-#Source0Download: https://www.open-mpi.org/software/hwloc/v2.0/
-Source0:	https://download.open-mpi.org/release/hwloc/v2.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	c4e43c41abbd76765273b7c91269cac7
+#Source0Download: https://www.open-mpi.org/software/hwloc/v2.2/
+Source0:	https://download.open-mpi.org/release/hwloc/v2.2/%{name}-%{version}.tar.bz2
+# Source0-md5:	5247ba4c1c63623c9285425552df5d92
 URL:		https://www.open-mpi.org/projects/hwloc/
 BuildRequires:	OpenCL-devel
 BuildRequires:	OpenGL-devel
@@ -91,6 +91,19 @@ Header files for hwloc library.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki hwloc.
+
+%package -n bash-completion-hwloc
+Summary:	Bash completion for hwloc commands
+Summary(pl.UTF-8):	Bashowe dopełnianie poleceń hwloc
+Group:		Applications/Shells
+Requires:	%{name} = %{version}-%{release}
+Requires:	bash-completion
+
+%description -n bash-completion-hwloc
+Bash completion for hwloc commands.
+
+%description -n bash-completion-hwloc -l pl.UTF-8
+Bashowe dopełnianie poleceń hwloc.
 
 %prep
 %setup -q
@@ -167,3 +180,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/HWLOC_*.3*
 %{_mandir}/man3/hwloc_*.3*
 %{_mandir}/man3/hwlocality_*.3*
+
+%files -n bash-completion-hwloc
+%defattr(644,root,root,755)
+/etc/bash_completion.d/hwloc-completion.bash
