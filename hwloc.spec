@@ -116,7 +116,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/hwloc-*
 %attr(755,root,root) %{_bindir}/lstopo
 %attr(755,root,root) %{_bindir}/lstopo-no-graphics
+%ifarch %{ix86} %{x8664} x32
 %attr(755,root,root) %{_sbindir}/hwloc-dump-hwdata
+%endif
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/hwloc_opencl.so
 %attr(755,root,root) %{_libdir}/%{name}/hwloc_pci.so
